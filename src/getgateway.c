@@ -59,6 +59,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #undef USE_PROC_NET_ROUTE
 #undef USE_SOCKET_ROUTE
 #define USE_SYSCTL_NET_ROUTE
+
+#include <TargetConditionals.h>
+
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
+#define OS_IOS
+#endif
+
 #endif
 
 #if (defined(sun) && defined(__SVR4))
@@ -98,7 +105,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <stdlib.h>
 #include <sys/sysctl.h>
 #include <sys/socket.h>
+
+#ifdef OS_IOS
+#include "ios/route.h"
+#else
 #include <net/route.h>
+#endif
 #endif
 #ifdef USE_SOCKET_ROUTE
 #include <unistd.h>

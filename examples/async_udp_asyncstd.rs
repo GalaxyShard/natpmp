@@ -43,3 +43,7 @@ fn main() -> Result<()> {
 
     Ok(())
 }
+#[cfg(not(feature = "async-std"))]
+fn main() {
+    panic!("async-std feature not enabled");
+}
